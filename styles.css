@@ -7,13 +7,14 @@ body {
   margin: 0;
 }
 
+.knob-container {
+  position: relative;
+}
+
 .knob {
   width: 150px;
   height: 150px;
-  background-color: #333;
-  border-radius: 50%;
-  position: relative;
-  border: 10px solid #999;
   cursor: pointer;
+  user-select: none;
   transition: transform 0.1s ease;
 }
