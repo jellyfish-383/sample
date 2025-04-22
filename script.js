@@ -1,52 +1,31 @@
-const knob = document.getElementById('knob');
-let isDragging = false;
-let lastAngle = 0;
-
-document.getElementById('connect').addEventListener('click', async () => {
+document.getElementById('connect-button').addEventListener('click', async () => {
   try {
     const device = await navigator.bluetooth.requestDevice({
       filters: [
-        { name: 'MyDevice' },
+        // 名前でフィルタ（任意）
+        { name: 'MyDeviceName' },
+        // 特定のサービスでフィルタ
         { services: ['battery_service'] }
       ]
     });
 
-    console.log('選択されたデバイス:', device.name);
+    document.getElementById('status').textContent = `選択されたデバイス: ${device.name}`;
 
     const server = await device.gatt.connect();
     console.log('接続成功:', server);
 
-    // 必要に応じてサービスやキャラクタリスティックを取得できる
+    document.getElementById('status').textContent = `接続中: ${device.name}`;
+
+    // 例: battery service にアクセス
+    const service = await server.getPrimaryService('battery_service');
+    const characteristic = await service.getCharacteristic('battery_level');
+    const value = await characteristic.readValue();
+    const batteryLevel = value.getUint8(0);
+
+    console.log(`バッテリーレベル: ${batteryLevel}%`);
+    alert(`バッテリーレベル: ${batteryLevel}%`);
   } catch (error) {
     console.error('接続失敗またはキャンセル:', error);
+    document.getElementById('status').textContent = '接続失敗またはキャンセル';
   }
-});
-
-
-knob.addEventListener('mousedown', (e) => {
-  isDragging = true;
-  const rect = knob.getBoundingClientRect();
-  const centerX = rect.left + rect.width / 2;
-  const centerY = rect.top + rect.height / 2;
-  
-  const getAngle = (x, y) => {
-    return Math.atan2(y - centerY, x - centerX) * (180 / Math.PI);
-  };
-
-  const onMouseMove = (moveEvent) => {
-    if (isDragging) {
-      const angle = getAngle(moveEvent.clientX, moveEvent.clientY);
-      const delta = angle - lastAngle;
-      knob.style.transform = `rotate(${delta}deg)`;
-    }
-  };
-
-  const onMouseUp = () => {
-    isDragging = false;
-    window.removeEventListener('mousemove', onMouseMove);
-    window.removeEventListener('mouseup', onMouseUp);
-  };
-
-  window.addEventListener('mousemove', onMouseMove);
-  window.addEventListener('mouseup', onMouseUp);
 });
