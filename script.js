@@ -8,6 +8,13 @@ knob.addEventListener('mousedown', (e) => {
   const centerX = rect.left + rect.width / 2;
   const centerY = rect.top + rect.height / 2;
 
+navigator.bluetooth.requestDevice({
+  filters: [
+    { name: 'MyDevice' }, // 名前でフィルタ
+    { services: ['battery_service'] } // 特定のサービスだけ許可
+  ]
+})
+  
   const getAngle = (x, y) => {
     return Math.atan2(y - centerY, x - centerX) * (180 / Math.PI);
   };
