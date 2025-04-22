@@ -1,49 +1,52 @@
-const status = document.getElementById('status');
+const knob = document.getElementById('knob');
+let isDragging = false;
+let lastAngle = 0;
 
-document.getElementById('connect-specific').addEventListener('click', async () => {
+document.getElementById('connect').addEventListener('click', async () => {
   try {
     const device = await navigator.bluetooth.requestDevice({
       filters: [
-        { name: 'MyDeviceName' }, // ← ここを実際のデバイス名に
-        { services: ['battery_service'] } // ← 使用するサービスUUID
+        { name: 'MyDevice' },
+        { services: ['battery_service'] }
       ]
     });
 
-    await connectToDevice(device);
+    console.log('選択されたデバイス:', device.name);
+
+    const server = await device.gatt.connect();
+    console.log('接続成功:', server);
+
+    // 必要に応じてサービスやキャラクタリスティックを取得できる
   } catch (error) {
-    console.error('フィルタ付き接続キャンセル:', error);
-    status.textContent = '接続キャンセル（フィルタ付き）';
+    console.error('接続失敗またはキャンセル:', error);
   }
 });
 
-document.getElementById('connect-any').addEventListener('click', async () => {
-  try {
-    const device = await navigator.bluetooth.requestDevice({
-      acceptAllDevices: true,
-      optionalServices: ['battery_service'] // 任意で読み取り対象サービスを追加
-    });
 
-    await connectToDevice(device);
-  } catch (error) {
-    console.error('全デバイス接続キャンセル:', error);
-    status.textContent = '接続キャンセル（全デバイス）';
-  }
+knob.addEventListener('mousedown', (e) => {
+  isDragging = true;
+  const rect = knob.getBoundingClientRect();
+  const centerX = rect.left + rect.width / 2;
+  const centerY = rect.top + rect.height / 2;
+  
+  const getAngle = (x, y) => {
+    return Math.atan2(y - centerY, x - centerX) * (180 / Math.PI);
+  };
+
+  const onMouseMove = (moveEvent) => {
+    if (isDragging) {
+      const angle = getAngle(moveEvent.clientX, moveEvent.clientY);
+      const delta = angle - lastAngle;
+      knob.style.transform = `rotate(${delta}deg)`;
+    }
+  };
+
+  const onMouseUp = () => {
+    isDragging = false;
+    window.removeEventListener('mousemove', onMouseMove);
+    window.removeEventListener('mouseup', onMouseUp);
+  };
+
+  window.addEventListener('mousemove', onMouseMove);
+  window.addEventListener('mouseup', onMouseUp);
 });
-
-async function connectToDevice(device) {
-  status.textContent = `選択されたデバイス: ${device.name}`;
-  const server = await device.gatt.connect();
-  console.log('接続成功:', server);
-  status.textContent = `接続中: ${device.name}`;
-
-  try {
-    const service = await server.getPrimaryService('battery_service');
-    const characteristic = await service.getCharacteristic('battery_level');
-    const value = await characteristic.readValue();
-    const batteryLevel = value.getUint8(0);
-    alert(`🔋 バッテリーレベル: ${batteryLevel}%`);
-  } catch (error) {
-    console.warn('バッテリーレベル取得失敗:', error);
-    alert('サービスは見つかりましたが、値の取得に失敗しました。');
-  }
-}
