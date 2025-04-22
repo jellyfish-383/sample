@@ -2,6 +2,27 @@ const knob = document.getElementById('knob');
 let isDragging = false;
 let lastAngle = 0;
 
+document.getElementById('connect').addEventListener('click', async () => {
+  try {
+    const device = await navigator.bluetooth.requestDevice({
+      filters: [
+        { name: 'MyDevice' },
+        { services: ['battery_service'] }
+      ]
+    });
+
+    console.log('選択されたデバイス:', device.name);
+
+    const server = await device.gatt.connect();
+    console.log('接続成功:', server);
+
+    // 必要に応じてサービスやキャラクタリスティックを取得できる
+  } catch (error) {
+    console.error('接続失敗またはキャンセル:', error);
+  }
+});
+
+
 knob.addEventListener('mousedown', (e) => {
   isDragging = true;
   const rect = knob.getBoundingClientRect();
