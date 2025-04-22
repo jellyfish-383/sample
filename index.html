@@ -1,23 +1,43 @@
 <!DOCTYPE html>
-<html lang="ja">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>BLE デバイス接続</title>
-  <style>
-    button {
-      font-size: 16px;
-      margin: 10px;
-    }
-  </style>
+  <meta charset="utf-8">
+  <title>Web Bluetooth Demo</title>
+  <link rel="icon" href="/path/to/knob.png" type="image/x-icon">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <h1>BLE デバイスに接続</h1>
 
-  <button id="connect-specific">特定デバイスに接続</button>
-  <button id="connect-any">すべてのデバイスから選択</button>
+  <h1>Web Bluetooth API Example</h1>
+  <button id="connect">Connect to Bluetooth Device</button>
 
-  <p id="status">未接続</p>
+  <script>
+    document.getElementById('connect').addEventListener('click', async () => {
+      try {
+        const device = await navigator.bluetooth.requestDevice({
+          acceptAllDevices: true,
+          optionalServices: ['battery_service'] // 例としてバッテリーサービスを利用
+        });
 
+        const server = await device.gatt.connect();
+        const service = await server.getPrimaryService('battery_service');
+        const characteristic = await service.getCharacteristic('battery_level');
+        const value = await characteristic.readValue();
+
+        const batteryLevel = value.getUint8(0);
+        alert('Battery level: ' + batteryLevel + '%');
+
+      } catch (error) {
+        console.error('Bluetooth connection failed:', error);
+      }
+    });
+  </script>
+
+  <div class="knob-container">
+    <img src="knob.png" alt="Knob" class="knob" id="knob">
+  </div>
   <script src="script.js"></script>
+
 </body>
 </html>
