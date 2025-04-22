@@ -2,12 +2,21 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>BLE接続テスト</title>
+  <title>BLE デバイス接続</title>
+  <style>
+    button {
+      font-size: 16px;
+      margin: 10px;
+    }
+  </style>
 </head>
 <body>
-  <h1>BLE デバイス接続</h1>
-  <button id="connect-button">Connect to BLE Device</button>
-  <div id="status">未接続</div>
+  <h1>BLE デバイスに接続</h1>
+
+  <button id="connect-specific">🎯 特定デバイスに接続</button>
+  <button id="connect-any">🌐 すべてのデバイスから選択</button>
+
+  <p id="status">未接続</p>
 
   <script src="script.js"></script>
 </body>
