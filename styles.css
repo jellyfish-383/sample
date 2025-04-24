@@ -1,7 +1,16 @@
 body {
   font-family: 'Segoe UI', sans-serif;
   margin: 0;
+  width: 800px;
+	margin-right: auto;
+	margin-left: auto;
 }
+
+
+h1{
+  text-align: center;
+}
+
 
 header {
       background-color: #def9fa;
@@ -41,8 +50,4 @@ header {
   cursor: pointer;
   user-select: none;
   transition: transform 0.1s ease;
-}
-
-h1{
-  text-align: center;
 }
