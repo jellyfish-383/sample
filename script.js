@@ -1,4 +1,17 @@
 navigator.bluetooth.requestDevice({
+  filters: [
+    { name: 'My_HM10_Device' }  // デバイス名でフィルタリング
+  ],
+  optionalServices: ['battery_service']
+})
+.then(device => {
+  console.log('選択されたデバイス:', device.name);
+})
+.catch(error => {
+  console.error('エラー:', error);
+});
+
+navigator.bluetooth.requestDevice({
   filters: [{ services: ['00001101-0000-1000-8000-00805F9B34FB'] }]  // SPP (Serial Port Profile)
 })
 .then(device => {
