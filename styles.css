@@ -42,3 +42,7 @@ header {
   user-select: none;
   transition: transform 0.1s ease;
 }
+
+h1{
+  text-align: center;
+}
