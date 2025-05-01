@@ -53,3 +53,9 @@ header {
   user-select: none;
   transition: transform 0.1s ease;
 }
+
+iframe {
+  border: none;
+  width: 100vw;
+  height: 100vh;
+}
