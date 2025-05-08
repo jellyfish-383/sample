@@ -123,6 +123,10 @@ footer {
   text-align: center;
 }
 
+ul.footer-menu li {
+display: inline;
+}
+
 .sns-icons {
   display: flex;
   gap: 10px;
