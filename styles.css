@@ -119,6 +119,10 @@ footer {
   margin: 5px 0;
 }
 
+.footer-bottom {
+  text-align: center;
+}
+
 .sns-icons {
   display: flex;
   gap: 10px;
