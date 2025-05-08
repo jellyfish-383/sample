@@ -1,61 +1,85 @@
 <!DOCTYPE html>
+
 <html>
-<head>
-  <meta charset="utf-8">
-  <title>Web Bluetooth Demo</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <link rel="stylesheet" href="styles.css">
+  <head>
+    <meta charset="utf-8">
+    <title>Web Bluetooth Demo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <div style="background-color:#000000;">
+    <font color="#FFFFFF;">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+  </head>
   
-  <link rel="icon" href="favicon.ico" type="image/x-icon">
-</head>
 <body>
 
-<header>
-  <div class="logo"><a href="https://jellyfish-383.github.io/sample"><img src="logo.png" alt="logopic" class="logopic" id="logopic"></a></div>
-  <nav>
-    <ul>
-      <li><a href="index.html">ホーム</a></li>
-      <li><a href="#">2</a></li>
-      <li><a href="#">3</a></li>
-      <li><a href="#">4</a></li>
-      <li><a href="inquiry.html">お問い合わせ</a></li>
-    </ul>
-  </nav>
-</header>
+    <header>
+      <div class="logo"><a href="https://jellyfish-383.github.io/sample"><img src="logo.png" alt="logopic" class="logopic" id="logopic"></a></div>
+      <nav>
+        <ul>
+          <li><a href="index.html">ホーム</a></li>
+          <li><a href="#">2</a></li>
+          <li><a href="#">3</a></li>
+          <li><a href="#">4</a></li>
+          <li><a href="inquiry.html">お問い合わせ</a></li>
+        </ul>
+      </nav>
 
-  <h1>Web Bluetooth API Example</h1>
-  <button id="connect">Connect to Bluetooth Device</button>
-
-  <script>
-    document.getElementById('connect').addEventListener('click', async () => {
-      try {
-        const device = await navigator.bluetooth.requestDevice({
-          acceptAllDevices: true,
-          optionalServices: ['battery_service'] // 例としてバッテリーサービスを利用
+      <!-- ハンバーガーメニュー -->
+      <input type="checkbox" id="menu-toggle" class="menu-toggle">
+      <label for="menu-toggle" class="hamburger">
+        <span></span>
+        <span></span>
+        <span></span>
+      </label>
+    
+      <!-- ナビゲーションメニュー -->
+      <nav class="nav-menu">
+        <ul>
+          <li><a href="#">ホーム</a></li>
+          <li><a href="#">サービス</a></li>
+          <li><a href="#">お問い合わせ</a></li>
+        </ul>
+      </nav>
+      
+    </header>
+    
+      <h1>Web Bluetooth API Example</h1>
+      
+      <button id="connect">Connect</button>
+    
+      <script>
+        document.getElementById('connect').addEventListener('click', async () => {
+          try {
+            const device = await navigator.bluetooth.requestDevice({
+              acceptAllDevices: true,
+              optionalServices: ['battery_service'] // 仮でバッテリーサービス
+            });
+    
+            const server = await device.gatt.connect();
+            const service = await server.getPrimaryService('battery_service');
+            const characteristic = await service.getCharacteristic('battery_level');
+            const value = await characteristic.readValue();
+    
+            const batteryLevel = value.getUint8(0);
+            alert('Battery level: ' + batteryLevel + '%');
+    
+          } catch (error) {
+            console.error('Bluetooth connection failed:', error);
+          }
         });
-
-        const server = await device.gatt.connect();
-        const service = await server.getPrimaryService('battery_service');
-        const characteristic = await service.getCharacteristic('battery_level');
-        const value = await characteristic.readValue();
-
-        const batteryLevel = value.getUint8(0);
-        alert('Battery level: ' + batteryLevel + '%');
-
-      } catch (error) {
-        console.error('Bluetooth connection failed:', error);
-      }
-    });
-  </script>
-<!--
-  <div class="knob-container">
-    <img src="knob.png" alt="Knob" class="knob" id="knob">
-  </div>
-  <script src="script.js"></script>
--->
-
-<h4>© 2025 jellyfish</h4>
-  
-</body>
+      </script>
+    <!--
+      <div class="knob-container">
+        <img src="knob.png" alt="Knob" class="knob" id="knob">
+      </div>
+      <script src="script.js"></script>
+    -->
+    
+    <hooter>    
+      <small>© 2025 jellyfish</small>
+    </hooter>
+      
+  </body>
 </html>
