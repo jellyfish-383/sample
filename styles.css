@@ -124,7 +124,8 @@ footer {
 }
 
 ul.footer-menu li {
-display: inline;
+  display: inline;
+  text-align: center;
 }
 
 .sns-icons {
