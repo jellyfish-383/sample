@@ -59,6 +59,81 @@ iframe {
   height: 100vh;
 }
 
+/* フッター全体のデザイン */
+footer {
+  background-color: #f4f4f4;
+  color: #333;
+  padding: 40px 20px;
+  font-size: 14px;
+  border-top: 1px solid #ddd;
+}
+
+.footer-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.footer-logo {
+  flex: 1 1 200px;
+  margin-bottom: 20px;
+}
+
+.footer-logo img {
+  max-width: 150px;
+  margin-bottom: 10px;
+}
+
+.footer-nav, .footer-contact, .footer-social {
+  flex: 1 1 250px;
+  margin-bottom: 20px;
+}
+
+.footer-nav h3, .footer-contact h3, .footer-social h3 {
+  color: #222;
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+.footer-nav ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-nav ul li {
+  margin: 8px 0;
+}
+
+.footer-nav a {
+  color: #666;
+  text-decoration: none;
+}
+
+.footer-nav a:hover {
+  color: #333;
+}
+
+.footer-contact p {
+  margin: 5px 0;
+}
+
+.sns-icons {
+  display: flex;
+  gap: 10px;
+}
+
+.sns-icons a {
+  font-size: 20px;
+  color: #666;
+  text-decoration: none;
+}
+
+.sns-icons a:hover {
+  color: #333;
+}
+
 @media screen and (max-width: 767px) {
   footer {
     display: none;
