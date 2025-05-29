@@ -1,6 +1,6 @@
 navigator.bluetooth.requestDevice({
   filters: [
-    { name: 'My_HM10_Device' }  // デバイス名でフィルタリング
+    { name: 'web bluetooth api' }  // デバイス名でフィルタリング
   ],
   optionalServices: ['battery_service']
 })
