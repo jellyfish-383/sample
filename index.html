@@ -44,7 +44,7 @@
         document.getElementById('connect').addEventListener('click', async () => {
           try {
             const device = await navigator.bluetooth.requestDevice({
-              acceptAllDevices: true,
+              filters: [{ name: 'web bluetooth api' }]
               optionalServices: ['battery_service'] // 仮でバッテリーサービス
             });
     
