@@ -41,17 +41,11 @@
       <button id="connect">Connect</button>
 
       <script>
-          document.getElementById('connect').addEventListener('click', async () => {
+        document.getElementById('connect').addEventListener('click', async () => {
           try {
             const device = await navigator.bluetooth.requestDevice({
               acceptAllDevices: true,
               optionalServices: ['battery_service'] // 仮でバッテリーサービス
-                    .then(device => {
-  console.log('選択されたデバイス:', device.name);
-})
-.catch(error => {
-  console.error('エラー:', error);
-});
             });
     
             const server = await device.gatt.connect();
@@ -67,8 +61,6 @@
           }
         });
       </script>
-
-
         
   <footer>
 　　<div class="footer-menu">
