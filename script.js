@@ -17,23 +17,23 @@
         });
 
 
-        document.getElementById('0').addEventListener('click', async () => {
- 
-            await characteristic.writeValue(new TextEncoder().encode('0'));  // Arduinoに'0'を送信
+document.getElementById('0').addEventListener('click', async () => {
+  if (characteristic) {
+    const data = new TextEncoder().encode('0');
+    await characteristic.writeValue(data);
+    alert('0 を送信しました（OFF）');
+  } else {
+    alert('先に Bluetooth に接続してください。');
+  }
+});
 
-       
-          } catch (error) {
-            console.error('Bluetooth connection failed:', error);
-          }
-        });
 
-
-        document.getElementById('1').addEventListener('click', async () => {
- 
-            await characteristic.writeValue(new TextEncoder().encode('1'));  // Arduinoに'1'を送信
-
-       
-          } catch (error) {
-            console.error('Bluetooth connection failed:', error);
-          }
-        });
+document.getElementById('1').addEventListener('click', async () => {
+  if (characteristic) {
+    const data = new TextEncoder().encode('1');
+    await characteristic.writeValue(data);
+    alert('1を送信しました（ON）');
+  } else {
+    alert('先に Bluetooth に接続してください。');
+  }
+});
