@@ -10,7 +10,7 @@ document.getElementById('connect').addEventListener('click', async () => {
     
             const server = await device.gatt.connect();
             const service = await server.getPrimaryService(0xFFE0);
-            const characteristic = await service.getCharacteristic(0xFFE1);
+            characteristic = await service.getCharacteristic(0xFFE1);
             await characteristic.writeValue(new TextEncoder().encode('1'));  // Arduinoに'1'を送信
 
        
