@@ -84,3 +84,22 @@ document.getElementById('btnoff').addEventListener('click', async () => {
     alert('先に Bluetooth に接続してください。');
   }
 });
+
+
+
+// スライダーのイベント登録
+document.getElementById('brightness').addEventListener('input', async (event) => {
+  if (!characteristic) {
+    alert('先に Bluetooth に接続してください。');
+    return;
+  }
+
+  const value = parseInt(event.target.value);
+  try {
+    // 1バイトのUint8Arrayで送信
+    await characteristic.writeValue(Uint8Array.of(value));
+    console.log(`Brightness set to: ${value}`);
+  } catch (error) {
+    console.error('送信エラー:', error);
+  }
+});
