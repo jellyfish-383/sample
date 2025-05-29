@@ -20,7 +20,7 @@ document.getElementById('connect').addEventListener('click', async () => {
         });
 
 
-document.getElementById('0').addEventListener('click', async () => {
+document.getElementById('btnoff').addEventListener('click', async () => {
   if (characteristic) {
     const data = new TextEncoder().encode('0');
     await characteristic.writeValue(data);
@@ -31,7 +31,7 @@ document.getElementById('0').addEventListener('click', async () => {
 });
 
 
-document.getElementById('1').addEventListener('click', async () => {
+document.getElementById('btnon').addEventListener('click', async () => {
   if (characteristic) {
     const data = new TextEncoder().encode('1');
     await characteristic.writeValue(data);
