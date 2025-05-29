@@ -40,35 +40,6 @@
       
       <button id="connect">Connect</button>
     
- <button onclick="sendCommand('1')">ON</button>
-  <button onclick="sendCommand('0')">OFF</button>
-
-  <script>
-    let bluetoothDevice;
-    let txCharacteristic;
-
-    async function connect() {
-      const serviceUuid = 0xFFE0; // HM-10のサービスUUID
-      const characteristicUuid = 0xFFE1; // 通常はこのキャラで通信
-
-      bluetoothDevice = await navigator.bluetooth.requestDevice({
-        filters: [{ namePrefix: 'HM' }],
-        optionalServices: [serviceUuid]
-      });
-
-      const server = await bluetoothDevice.gatt.connect();
-      const service = await server.getPrimaryService(serviceUuid);
-      txCharacteristic = await service.getCharacteristic(characteristicUuid);
-    }
-
-    async function sendCommand(command) {
-      if (!txCharacteristic) {
-        await connect();
-      }
-      const encoder = new TextEncoder();
-      await txCharacteristic.writeValue(encoder.encode(command));
-    }
-  </script>
     <!--
       <div class="knob-container">
         <img src="knob.png" alt="Knob" class="knob" id="knob">
@@ -76,6 +47,12 @@
       <script src="script.js"></script>
     -->
 
+  <div style="margin: 20px 0;">
+    <button id="connect">🔌 Connect to HM-10</button>
+    <button onclick="sendCommand('1')">LED ON</button>
+    <button onclick="sendCommand('0')">LED OFF</button>
+  </div>
+  
   <footer>
 　　<div class="footer-menu">
      <a href="#" class="footer-link">home ｜</a>
