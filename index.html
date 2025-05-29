@@ -11,9 +11,6 @@
   </head>
   
 <body>
-
-      <script src="script.js"></script>
-
   
     <header>
       <div class="logo"><a href="https://jellyfish-383.github.io/sample"><img src="logo.png" alt="logopic" class="logopic" id="logopic"></a></div>
@@ -43,6 +40,39 @@
       
       <button id="connect">Connect</button>
 
+      <script>
+          document.getElementById('connect').addEventListener('click', async () => {
+          try {
+            const device = await navigator.bluetooth.requestDevice({
+              acceptAllDevices: true,
+                filters: [
+                        { name: 'web bluetooth api' }  // デバイス名でフィルタリング
+                ],      
+              optionalServices: ['battery_service'] // 仮でバッテリーサービス
+                    .then(device => {
+  console.log('選択されたデバイス:', device.name);
+})
+.catch(error => {
+  console.error('エラー:', error);
+});
+            });
+    
+            const server = await device.gatt.connect();
+            const service = await server.getPrimaryService('battery_service');
+            const characteristic = await service.getCharacteristic('battery_level');
+            const value = await characteristic.readValue();
+    
+            const batteryLevel = value.getUint8(0);
+            alert('Battery level: ' + batteryLevel + '%');
+    
+          } catch (error) {
+            console.error('Bluetooth connection failed:', error);
+          }
+        });
+      </script>
+
+
+        
   <footer>
 　　<div class="footer-menu">
      <a href="#" class="footer-link">home ｜</a>
