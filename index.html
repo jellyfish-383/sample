@@ -44,8 +44,8 @@
         document.getElementById('connect').addEventListener('click', async () => {
           try {
             const device = await navigator.bluetooth.requestDevice({
-              filters: [{ name: 'web bluetooth api' }]
-              optionalServices: ['battery_service'] // 仮でバッテリーサービス
+              filters: [{ namePrefix: 'HM' }],
+              optionalServices: [0xFFE0]
             });
     
             const server = await device.gatt.connect();
