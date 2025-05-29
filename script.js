@@ -1,4 +1,7 @@
-        document.getElementById('connect').addEventListener('click', async () => {
+let characteristic = null;
+
+
+document.getElementById('connect').addEventListener('click', async () => {
           try {
             const device = await navigator.bluetooth.requestDevice({
               filters: [{ namePrefix: 'HM' }],
