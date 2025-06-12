@@ -54,7 +54,7 @@ document.getElementById('connect').addEventListener('click', async () => {
     const server = await device.gatt.connect();
     const service = await server.getPrimaryService(0xFFE0);
     characteristic = await service.getCharacteristic(0xFFE1);
-    await characteristic.writeValue(Uint8Array.of(1));
+    await characteristic.writeValue(new TextEncoder().encode('1'));
 
     console.log("Bluetooth 接続完了");
     alert("Bluetooth 接続完了");
@@ -64,7 +64,6 @@ document.getElementById('connect').addEventListener('click', async () => {
     alert("接続失敗");
   }
 });
-
 
 document.getElementById('btnon').addEventListener('click', async () => {
   if (characteristic) {
