@@ -65,6 +65,7 @@ document.getElementById('connect').addEventListener('click', async () => {
   }
 });
 
+
 document.getElementById('btnon').addEventListener('click', async () => {
   if (characteristic) {
     const data = new TextEncoder().encode('1');
