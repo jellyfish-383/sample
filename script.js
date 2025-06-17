@@ -129,34 +129,27 @@ async function scanBluetoothDevice() {
 }
 
 document.getElementById('btnon').addEventListener('click', async () => {
-  try {
-    if (characteristic) {
-      const data = new TextEncoder().encode('1');
-      await characteristic.writeValue(data);
-      alert('ON 信号送信');
-    } else {
-      alert('先に Bluetooth に接続してください。');
-    }
-  } catch (error) {
-    console.error('送信エラー:', error);
-    alert('送信に失敗しました: ' + error.message);
+  console.log('ON button clicked');  // クリックされたか確認
+  if (characteristic) {
+    const data = new TextEncoder().encode('1');
+    await characteristic.writeValue(data);
+    alert('ON 信号送信');
+  } else {
+    alert('先に Bluetooth に接続してください。');
   }
 });
 
 document.getElementById('btnoff').addEventListener('click', async () => {
-  try {
-    if (characteristic) {
-      const data = new TextEncoder().encode('0');
-      await characteristic.writeValue(data);
-      alert('OFF 信号送信');
-    } else {
-      alert('先に Bluetooth に接続してください。');
-    }
-  } catch (error) {
-    console.error('送信エラー:', error);
-    alert('送信に失敗しました: ' + error.message);
+  console.log('OFF button clicked');  // クリックされたか確認
+  if (characteristic) {
+    const data = new TextEncoder().encode('0');
+    await characteristic.writeValue(data);
+    alert('OFF 信号送信');
+  } else {
+    alert('先に Bluetooth に接続してください。');
   }
 });
+s
 
 
 
