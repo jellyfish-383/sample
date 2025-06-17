@@ -118,6 +118,20 @@ async function scanBluetoothDevice() {
   }
 }
 
+document.getElementById('btnon').addEventListener('click', async () => {
+  try {
+    if (characteristic) {
+      const data = new TextEncoder().encode('1');
+      await characteristic.writeValue(data);
+      alert('ON 信号送信');
+    } else {
+      alert('先に Bluetooth に接続してください。');
+    }
+  } catch (error) {
+    console.error('送信エラー:', error);
+    alert('送信に失敗しました: ' + error.message);
+  }
+});
 
 
 document.getElementById('btnoff').addEventListener('click', async () => {
