@@ -77,49 +77,40 @@ document.getElementById('btnon').addEventListener('click', async () => {
 });
 */
 
-let characteristic = null;
-
-document.getElementById('connect').addEventListener('click', async () => {
+async function scanBluetoothDevice() {
   try {
+    // デバイスを選択
     const device = await navigator.bluetooth.requestDevice({
       filters: [{ namePrefix: 'HM' }],
-      optionalServices: [0xFFE0]
+      optionalServices: [0xFFE0]  // サービスUUID
     });
 
+    console.log('Connected to device:', device.name);
+
+    // デバイスに接続
     const server = await device.gatt.connect();
-    console.log('Bluetooth connected:', device.name); // 接続確認
-    const service = await server.getPrimaryService(0xFFE0);
-    characteristic = await service.getCharacteristic(0xFFE1);
+    console.log('Connected to GATT server.');
 
-    if (characteristic) {
-      console.log('Characteristic found:', characteristic);
-      alert('Bluetooth 接続完了');
-    } else {
-      console.log('Characteristic not found');
-      alert('Characteristic が見つかりませんでした。');
+    // サービスを取得
+    const services = await server.getPrimaryServices();
+    console.log('Services:', services);
+
+    // サービスごとにキャラクタリスティックを取得
+    for (const service of services) {
+      console.log('Service UUID:', service.uuid);
+      const characteristics = await service.getCharacteristics();
+      for (const characteristic of characteristics) {
+        console.log('Characteristic UUID:', characteristic.uuid);
+      }
     }
+    
   } catch (error) {
-    console.error('Bluetooth connection failed:', error);
-    alert("接続失敗: " + error.message);
+    console.error('Error:', error);
   }
-});
+}
 
-document.getElementById('btnon').addEventListener('click', async () => {
-  if (characteristic) {
-    try {
-      const data = new TextEncoder().encode('1').buffer; // ArrayBuffer に変換
-      await characteristic.writeValue(data);
-      alert('ON 信号送信');
-    } catch (error) {
-      console.error('送信エラー:', error); // 詳細なエラーメッセージ
-      alert('送信エラー: ' + error.message);
-    }
-  } else {
-    alert('先に Bluetooth に接続してください。');
-  }
-});
-
-
+// スキャン開始
+scanBluetoothDevice();
 
 
 document.getElementById('btnoff').addEventListener('click', async () => {
