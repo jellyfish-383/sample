@@ -87,10 +87,14 @@ document.getElementById('btnoff').addEventListener('click', async () => {
 });
 */
 
+let characteristic = null;  // グローバルスコープで characteristic を定義
+
 document.getElementById('connect').addEventListener('click', async () => {
   try {
-    // ユーザーのクリックイベント内で Bluetooth デバイスのリクエストを行う
     await scanBluetoothDevice();
+    // 接続後にボタンを有効化
+    document.getElementById('btnon').disabled = false;
+    document.getElementById('btnoff').disabled = false;
   } catch (error) {
     console.error('Error:', error);
   }
@@ -98,10 +102,9 @@ document.getElementById('connect').addEventListener('click', async () => {
 
 async function scanBluetoothDevice() {
   try {
-    // ユーザーのジェスチャー（クリック）内でデバイスリクエストを実行
     const device = await navigator.bluetooth.requestDevice({
       filters: [{ namePrefix: 'HM' }],
-      optionalServices: [0xFFE0]  // サービスUUID
+      optionalServices: [0xFFE0]
     });
 
     console.log('Connected to device:', device.name);
@@ -118,38 +121,52 @@ async function scanBluetoothDevice() {
     for (const service of services) {
       console.log('Service UUID:', service.uuid);
       const characteristics = await service.getCharacteristics();
-      for (const characteristic of characteristics) {
-        console.log('Characteristic UUID:', characteristic.uuid);
+      for (const char of characteristics) {
+        console.log('Characteristic UUID:', char.uuid);
+        if (char.uuid === '0000ffe1-0000-1000-8000-00805f9b34fb') {
+          characteristic = char;  // 取得したキャラクタリスティックを設定
+        }
       }
     }
-
   } catch (error) {
     console.error('Error:', error);
   }
 }
 
+// ON ボタンのクリックイベント
 document.getElementById('btnon').addEventListener('click', async () => {
-  console.log('ON button clicked');  // クリックされたか確認
+  console.log('ON button clicked');
   if (characteristic) {
     const data = new TextEncoder().encode('1');
-    await characteristic.writeValue(data);
-    alert('ON 信号送信');
+    try {
+      await characteristic.writeValue(data);
+      alert('ON 信号送信');
+    } catch (error) {
+      console.error('送信エラー:', error);
+      alert('送信に失敗しました');
+    }
   } else {
     alert('先に Bluetooth に接続してください。');
   }
 });
 
+// OFF ボタンのクリックイベント
 document.getElementById('btnoff').addEventListener('click', async () => {
-  console.log('OFF button clicked');  // クリックされたか確認
+  console.log('OFF button clicked');
   if (characteristic) {
     const data = new TextEncoder().encode('0');
-    await characteristic.writeValue(data);
-    alert('OFF 信号送信');
+    try {
+      await characteristic.writeValue(data);
+      alert('OFF 信号送信');
+    } catch (error) {
+      console.error('送信エラー:', error);
+      alert('送信に失敗しました');
+    }
   } else {
     alert('先に Bluetooth に接続してください。');
   }
 });
-s
+
 
 
 
