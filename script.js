@@ -87,36 +87,38 @@ document.getElementById('connect').addEventListener('click', async () => {
     });
 
     const server = await device.gatt.connect();
+    console.log('Bluetooth connected:', device.name); // 接続確認
     const service = await server.getPrimaryService(0xFFE0);
     characteristic = await service.getCharacteristic(0xFFE1);
-    
-    console.log("Characteristic:", characteristic); // デバッグ用
 
-    await characteristic.writeValue(new TextEncoder().encode('1'));
-
-    console.log("Bluetooth 接続完了");
-    alert("Bluetooth 接続完了");
-
+    if (characteristic) {
+      console.log('Characteristic found:', characteristic);
+      alert('Bluetooth 接続完了');
+    } else {
+      console.log('Characteristic not found');
+      alert('Characteristic が見つかりませんでした。');
+    }
   } catch (error) {
     console.error('Bluetooth connection failed:', error);
-    alert("接続失敗");
+    alert("接続失敗: " + error.message);
   }
 });
 
 document.getElementById('btnon').addEventListener('click', async () => {
   if (characteristic) {
-    const data = new TextEncoder().encode('1').buffer; // ArrayBuffer に変換
     try {
+      const data = new TextEncoder().encode('1').buffer; // ArrayBuffer に変換
       await characteristic.writeValue(data);
       alert('ON 信号送信');
     } catch (error) {
-      console.error('送信エラー:', error); // エラーハンドリング
+      console.error('送信エラー:', error); // 詳細なエラーメッセージ
       alert('送信エラー: ' + error.message);
     }
   } else {
     alert('先に Bluetooth に接続してください。');
   }
 });
+
 
 
 
