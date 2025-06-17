@@ -77,9 +77,18 @@ document.getElementById('btnon').addEventListener('click', async () => {
 });
 */
 
+document.getElementById('connect').addEventListener('click', async () => {
+  try {
+    // ユーザーのクリックイベント内で Bluetooth デバイスのリクエストを行う
+    await scanBluetoothDevice();
+  } catch (error) {
+    console.error('Error:', error);
+  }
+});
+
 async function scanBluetoothDevice() {
   try {
-    // デバイスを選択
+    // ユーザーのジェスチャー（クリック）内でデバイスリクエストを実行
     const device = await navigator.bluetooth.requestDevice({
       filters: [{ namePrefix: 'HM' }],
       optionalServices: [0xFFE0]  // サービスUUID
@@ -103,14 +112,12 @@ async function scanBluetoothDevice() {
         console.log('Characteristic UUID:', characteristic.uuid);
       }
     }
-    
+
   } catch (error) {
     console.error('Error:', error);
   }
 }
 
-// スキャン開始
-scanBluetoothDevice();
 
 
 document.getElementById('btnoff').addEventListener('click', async () => {
