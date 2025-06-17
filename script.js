@@ -75,6 +75,16 @@ document.getElementById('btnon').addEventListener('click', async () => {
     alert('先に Bluetooth に接続してください。');
   }
 });
+
+document.getElementById('btnoff').addEventListener('click', async () => {
+  if (characteristic) {
+    const data = new TextEncoder().encode('0');
+    await characteristic.writeValue(data);
+    alert('OFF 信号送信');
+  } else {
+    alert('先に Bluetooth に接続してください。');
+  }
+});
 */
 
 document.getElementById('connect').addEventListener('click', async () => {
@@ -119,26 +129,35 @@ async function scanBluetoothDevice() {
 }
 
 document.getElementById('btnon').addEventListener('click', async () => {
-  if (characteristic) {
-    const data = new TextEncoder().encode('1');
-    await characteristic.writeValue(data);
-    alert('ON 信号送信');
-  } else {
-    alert('先に Bluetooth に接続してください。');
+  try {
+    if (characteristic) {
+      const data = new TextEncoder().encode('1');
+      await characteristic.writeValue(data);
+      alert('ON 信号送信');
+    } else {
+      alert('先に Bluetooth に接続してください。');
+    }
+  } catch (error) {
+    console.error('送信エラー:', error);
+    alert('送信に失敗しました: ' + error.message);
   }
 });
-
-
 
 document.getElementById('btnoff').addEventListener('click', async () => {
-  if (characteristic) {
-    const data = new TextEncoder().encode('0');
-    await characteristic.writeValue(data);
-    alert('OFF 信号送信');
-  } else {
-    alert('先に Bluetooth に接続してください。');
+  try {
+    if (characteristic) {
+      const data = new TextEncoder().encode('0');
+      await characteristic.writeValue(data);
+      alert('OFF 信号送信');
+    } else {
+      alert('先に Bluetooth に接続してください。');
+    }
+  } catch (error) {
+    console.error('送信エラー:', error);
+    alert('送信に失敗しました: ' + error.message);
   }
 });
+
 
 
 
