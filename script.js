@@ -1,36 +1,41 @@
-let characteristic = null;
+let characteristic = null;Add commentMore actions
+
 
 document.getElementById('connect').addEventListener('click', async () => {
-    const device = await navigator.bluetooth.requestDevice({
-    filters: [{ namePrefix: 'HM' }],
-    optionalServices: [0xFFE0]
+          try {
+            const device = await navigator.bluetooth.requestDevice({
+              filters: [{ namePrefix: 'HM' }],
+              optionalServices: [0xFFE0]
+            });
 
-    const server = await device.gatt.connect();
-    const service = await server.getPrimaryService(0xFFE0);
-    characteristic = await service.getCharacteristic(0xFFE1);
-    await characteristic.writeValue(new TextEncoder().encode('1'));
+            const server = await device.gatt.connect();
+            const service = await server.getPrimaryService(0xFFE0);
+            const characteristic = await service.getCharacteristic(0xFFE1);
+            await characteristic.writeValue(new TextEncoder().encode('1'));  // Arduinoに'1'を送信
 
-    console.log("Bluetooth 接続完了");
-    alert("Bluetooth 接続完了");
 
-  } 
-});
+          } catch (error) {
+            console.error('Bluetooth connection failed:', error);
+          }
+        });
 
-document.getElementById('btnon').addEventListener('click', async () => {
+
+document.getElementById('0').addEventListener('click', async () => {
   if (characteristic) {
-    const data = new TextEncoder().encode('1');
+    const data = new TextEncoder().encode('0');
     await characteristic.writeValue(data);
-    alert('ON 信号送信');
+    alert('0 を送信しました（OFF）');
   } else {
     alert('先に Bluetooth に接続してください。');
   }
 });
 
-document.getElementById('btnoff').addEventListener('click', async () => {
+
+document.getElementById('1').addEventListener('click', async () => {
   if (characteristic) {
-    const data = new TextEncoder().encode('0');
+    const data = new TextEncoder().encode('1');
     await characteristic.writeValue(data);
-    alert('OFF 信号送信');
+    alert('1を送信しました（ON）');
   } else {
     alert('先に Bluetooth に接続してください。');
   }
