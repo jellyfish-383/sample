@@ -19,7 +19,7 @@ document.getElementById('connect').addEventListener('click', async () => {
       return;
     }
 
-    await new Promise(resolve => setTimeout(resolve, 500));
+    await new Promise(resolve => setTimeout(resolve, 1000));
     
     await characteristic.writeValue(new TextEncoder().encode('1'));
 
