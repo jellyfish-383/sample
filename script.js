@@ -1,18 +1,23 @@
 let characteristic = null;
 Add commentMore actions
 document.getElementById('connect').addEventListener('click', async () => {
-    const device = await navigator.bluetooth.requestDevice({
-      filters: [{ namePrefix: 'HM' }],
-      optionalServices: [0xFFE0]
-    });
-    
-    const server = await device.gatt.connect();
-    const service = await server.getPrimaryService(0xFFE0);
-    characteristic = await service.getCharacteristic(0xFFE1);
-    await characteristic.writeValue(new TextEncoder().encode('1'));
+    try {
+        const device = await navigator.bluetooth.requestDevice({
+            filters: [{ namePrefix: 'HM' }],
+            optionalServices: [0xFFE0]
+        });
 
-    console.log("Bluetooth 接続完了");
-    alert("Bluetooth 接続完了");
+        const server = await device.gatt.connect();
+        const service = await server.getPrimaryService(0xFFE0);
+        characteristic = await service.getCharacteristic(0xFFE1);
+        await characteristic.writeValue(new TextEncoder().encode('1'));
+
+        console.log("Bluetooth 接続完了");
+        alert("Bluetooth 接続完了");
+    } catch (error) {
+        console.error("接続エラー:", error);
+        alert("接続に失敗しました: " + error.message);
+    }
 });
   
 document.getElementById('btnon').addEventListener('click', async () => {
