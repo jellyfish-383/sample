@@ -13,7 +13,7 @@ document.getElementById('connect').addEventListener('click', async () => {
 
     console.log("Bluetooth 接続完了");
     alert("Bluetooth 接続完了");
-};
+});
   
 document.getElementById('btnon').addEventListener('click', async () => {
   if (characteristic) {
