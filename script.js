@@ -1,11 +1,9 @@
 let characteristic = null;
 Add commentMore actions
 document.getElementById('connect').addEventListener('click', async () => {
-  try {
     const device = await navigator.bluetooth.requestDevice({
       filters: [{ namePrefix: 'HM' }],
       optionalServices: [0xFFE0]
-    });
 
     const server = await device.gatt.connect();
     const service = await server.getPrimaryService(0xFFE0);
@@ -14,14 +12,8 @@ document.getElementById('connect').addEventListener('click', async () => {
 
     console.log("Bluetooth 接続完了");
     alert("Bluetooth 接続完了");
-
-  } catch (error) {
-    console.error('Bluetooth connection failed:', error);
-    alert("接続失敗");
-  }
-});
-
-
+}
+  
 document.getElementById('btnon').addEventListener('click', async () => {
   if (characteristic) {
 　　　const data = new TextEncoder().encode('1').buffer; // .bufferを追加
