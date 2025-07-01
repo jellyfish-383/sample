@@ -1,5 +1,4 @@
 let characteristic = null;
-Add commentMore actions
 document.getElementById('connect').addEventListener('click', async () => {
     try {
         const device = await navigator.bluetooth.requestDevice({
