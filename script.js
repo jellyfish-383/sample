@@ -21,11 +21,9 @@ document.getElementById('connect').addEventListener('click', async () => {
   
 document.getElementById('btnon').addEventListener('click', async () => {
   if (characteristic) {
-　　　const data = new TextEncoder().encode('1').buffer; // .bufferを追加
-　　　await characteristic.writeValue(data);
-    const data = new TextEncoder().encode('1');
-    await characteristic.writeValue(data);
-    alert('ON 信号送信');
+　　    const data = new TextEncoder().encode('1').buffer;
+　　    await characteristic.writeValue(data);
+        alert('ON 信号送信');
   } else {
     alert('先に Bluetooth に接続してください。');
   }
