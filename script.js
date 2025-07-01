@@ -4,7 +4,7 @@ document.getElementById('connect').addEventListener('click', async () => {
     const device = await navigator.bluetooth.requestDevice({
       filters: [{ namePrefix: 'HM' }],
       optionalServices: [0xFFE0]
-
+    }
     const server = await device.gatt.connect();
     const service = await server.getPrimaryService(0xFFE0);
     characteristic = await service.getCharacteristic(0xFFE1);
