@@ -25,9 +25,11 @@ document.getElementById('connect').addEventListener('click', async () => {
 
     console.log("Bluetooth 接続完了");
     alert("Bluetooth 接続完了");
+    Serial.println("接続完了");
   } catch (error) {
     console.error("接続エラー:", error);
     alert("接続に失敗しました: " + error.message);
+    Serial.println("接続失敗")
   }
 });
 
