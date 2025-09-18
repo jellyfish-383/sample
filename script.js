@@ -21,7 +21,7 @@ document.getElementById('connect').addEventListener('click', async () => {
 
     await new Promise(resolve => setTimeout(resolve, 5000));
     
-    await characteristic.writeValue(new TextEncoder().encode('1'));
+    await characteristic.writeValue(new TextEncoder().encode('SET 1'));
 
     console.log("Bluetooth 接続完了");
     alert("Bluetooth 接続完了");
@@ -54,7 +54,7 @@ document.getElementById('btnon').addEventListener('click', async () => {
 document.getElementById('btnoff').addEventListener('click', async () => {
   if (characteristic) {
     try { 
-      const data = new TextEncoder().encode('0');
+      const data = new TextEncoder().encode('SET 0');
       await characteristic.writeValue(data);
       alert('OFF 信号送信');
     } catch (error) {
