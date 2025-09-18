@@ -37,9 +37,7 @@ document.getElementById('connect').addEventListener('click', async () => {
 document.getElementById('btnon').addEventListener('click', async () => {
   if (characteristic) {
     try {
-      await new Promise(resolve => setTimeout(resolve, 5000));
       const data = new TextEncoder().encode('1');
-      await new Promise(resolve => setTimeout(resolve, 5000));
       await characteristic.writeValue(data);
       alert('ON 信号送信');
     } catch (error) {
