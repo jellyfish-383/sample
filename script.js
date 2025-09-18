@@ -37,7 +37,7 @@ document.getElementById('connect').addEventListener('click', async () => {
 document.getElementById('btnon').addEventListener('click', async () => {
   if (characteristic) {
     try {
-      const data = new TextEncoder().encode('1');
+      const data = new TextEncoder().encode('SET 1\n');
       await characteristic.writeValue(data);
       alert('ON 信号送信');
     } catch (error) {
@@ -52,7 +52,7 @@ document.getElementById('btnon').addEventListener('click', async () => {
 document.getElementById('btnoff').addEventListener('click', async () => {
   if (characteristic) {
     try { 
-      const data = new TextEncoder().encode('SET 0');
+      const data = new TextEncoder().encode('SET 0\n');
       await characteristic.writeValue(data);
       alert('OFF 信号送信');
     } catch (error) {
