@@ -27,28 +27,16 @@
     </header>
     
       <h1>Web Bluetooth API Example</h1>
-<!--
-  <a href="#" class="buttonIconText">
-  <span class="buttonIconText_icon">
-    <svg class="iconEmail" width="32" height="32" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <rect x="3.5" y="5.5" width="17" height="12" rx="1.5" stroke="#6fa24a"/>
-      <path d="M6 9C6 9 11.5 12 12 12C12.5 12 18 9 18 9" stroke="#6fa24a" stroke-linecap="round"/>
-    </svg>
-  </span>
-  <span class="buttonIconText_text">お問い合わせ</span>
-</a>
-      -->
-  
-    <button id="connect">Connect</button>
-    <button id="btnoff">0にする</button>
-    <button id="btnon">1にする</button>
-<!--  
-    <footer>
-      <div class="footer-bottom">
-        <p>&copy; 2025 eita chiba All rights reserved.</p>
-       </div>
-    </footer>
--->
+
+    <button id="connectBtn">接続（HM-10）</button>
+  <br><br>
+
+  <label for="slider">ポテンショメータ値（0〜255）:</label>
+  <input type="range" id="slider" min="0" max="255" value="0">
+  <span id="valueLabel">0</span>
+
+  <div class="log" id="log"></div>
+
     <script src="script.js" defer></script>
   
   </body>
