@@ -27,17 +27,17 @@ async function connectToHM10() {
     const service = await server.getPrimaryService(serviceUUID);
     bleCharacteristic = await service.getCharacteristic(characteristicUUID);
 
-    logMessage("✅ HM-10 に接続成功！");
+    logMessage("HM-10 に接続成功！");
   } catch (error) {
     console.error(error);
-    logMessage("❌ 接続失敗: " + error);
+    logMessage("接続失敗: " + error);
   }
 }
 
 // BLE で値を送信
 async function sendValue(value) {
   if (!bleCharacteristic) {
-    logMessage("⚠️ まずはBLEに接続してください。");
+    logMessage("まずはBLEに接続してください。");
     return;
   }
 
