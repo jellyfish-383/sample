@@ -1,10 +1,10 @@
 body {
-  font-family: 'Segoe UI', sans-serif;
+font-family: sans-serif; padding: 2em; 
   margin: 0;
   margin-right: 0;
   margin-left: 0;
 }
-
+    input[type=range] { width: 100%; }
 h1{
   text-align: center;
 }
