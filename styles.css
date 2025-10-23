@@ -18,6 +18,15 @@ header {
       justify-content: space-between;
       align-items: center;
     }
+
+button{
+  padding: 10px;
+}
+
+slider {
+  padding: 10px;
+}
+
 .logo {
       font-size: 1.5em;
       font-weight: bold;
