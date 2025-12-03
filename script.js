@@ -108,8 +108,8 @@ async function sendValue(value) {
     return;
   }
 
-  // ポテンショメータ0番へ送信
-  const potNumber = 0;
+  // ← ここが重要
+  const potNumber = 0;   // MCP4151 #1 を制御
   const command = `SET ${potNumber} ${value}\n`;
 
   const encoder = new TextEncoder();
@@ -123,6 +123,7 @@ async function sendValue(value) {
     logMessage("送信失敗: " + err);
   }
 }
+
 
 // イベント
 connectBtn.addEventListener("click", connectToHM10);
