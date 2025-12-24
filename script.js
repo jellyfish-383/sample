@@ -141,9 +141,20 @@ async function sendValue(value) {
 
 
 // イベント
-connectBtn.addEventListener("click", connectToHM10);
+// connectBtn.addEventListener("click", connectToHM10);
+
+// slider.addEventListener("input", () => {
+//   const value = slider.value;
+//   valueLabel.textContent = value;
+//   sendValue(value);
+// });
+let lastSent = 0;
 
 slider.addEventListener("input", () => {
+  const now = Date.now();
+  if (now - lastSent < 20) return; // 20ms制限
+  lastSent = now;
+
   const value = slider.value;
   valueLabel.textContent = value;
   sendValue(value);
