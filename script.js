@@ -73,7 +73,15 @@ const slider = document.getElementById("slider");
 const valueLabel = document.getElementById("valueLabel");
 const log = document.getElementById("log");
 
+slider.disabled = true;
+
 console.log("script.js loaded");
+console.log("DOM loaded", {
+  connectBtn,
+  slider,
+  valueLabel,
+  log
+});
 
 
 // 出力ログ
@@ -98,6 +106,7 @@ async function connectToHM10() {
     bleCharacteristic = await service.getCharacteristic(characteristicUUID);
 
     logMessage("HM-10 接続成功");
+    slider.disabled = false;
   } catch (error) {
     console.error(error);
     logMessage("接続失敗: " + error);
@@ -105,19 +114,33 @@ async function connectToHM10() {
 }
 
 // HM-10へ送信
+// async function sendValue(value) {
+//   if (!bleCharacteristic) {
+//     logMessage("先に接続してください");
+//     return;
+//   }
+
+//   const command = `SET ${value}\n`;
+
+//   const encoder = new TextEncoder();
+//   const data = encoder.encode(command);
+
+//   await bleCharacteristic.writeValue(data);
+//   logMessage(`送信: ${command.trim()}`);
+// }
 async function sendValue(value) {
-  if (!bleCharacteristic) {
-    logMessage("先に接続してください");
-    return;
-  }
+  if (!bleCharacteristic) return;
 
   const command = `SET ${value}\n`;
+  const data = new TextEncoder().encode(command);
 
-  const encoder = new TextEncoder();
-  const data = encoder.encode(command);
-
-  await bleCharacteristic.writeValue(data);
-  logMessage(`送信: ${command.trim()}`);
+  try {
+    await bleCharacteristic.writeValue(data);
+    logMessage(`送信: ${command.trim()}`);
+  } catch (e) {
+    console.error(e);
+    logMessage("BLE送信エラー");
+  }
 }
 
 // async function sendValue(value) {
@@ -162,3 +185,9 @@ slider.addEventListener("input", () => {
   valueLabel.textContent = value;
   sendValue(value);
 });
+
+connectBtn.addEventListener("click", () => {
+  console.log("connect button clicked");
+  connectToHM10();
+});
+
