@@ -73,6 +73,9 @@ const slider = document.getElementById("slider");
 const valueLabel = document.getElementById("valueLabel");
 const log = document.getElementById("log");
 
+console.log("script.js loaded");
+
+
 // 出力ログ
 function logMessage(msg) {
   log.innerText = `[LOG] ${msg}`;
