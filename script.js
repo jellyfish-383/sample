@@ -108,21 +108,36 @@ async function sendValue(value) {
     return;
   }
 
-  // ← ここが重要
-  const potNumber = 0;   // MCP4151 #1 を制御
-  const command = `SET ${potNumber} ${value}\n`;
+  const command = `SET ${value}\n`;
 
   const encoder = new TextEncoder();
   const data = encoder.encode(command);
 
-  try {
-    await bleCharacteristic.writeValue(data);
-    logMessage(`送信: ${command.trim()}`);
-  } catch (err) {
-    console.error(err);
-    logMessage("送信失敗: " + err);
-  }
+  await bleCharacteristic.writeValue(data);
+  logMessage(`送信: ${command.trim()}`);
 }
+
+// async function sendValue(value) {
+//   if (!bleCharacteristic) {
+//     logMessage("先に接続してください");
+//     return;
+//   }
+
+//   // ← ここが重要
+//   const potNumber = 0;   // MCP4151 #1 を制御
+//   const command = `SET ${potNumber} ${value}\n`;
+
+//   const encoder = new TextEncoder();
+//   const data = encoder.encode(command);
+
+//   try {
+//     await bleCharacteristic.writeValue(data);
+//     logMessage(`送信: ${command.trim()}`);
+//   } catch (err) {
+//     console.error(err);
+//     logMessage("送信失敗: " + err);
+//   }
+// }
 
 
 // イベント
