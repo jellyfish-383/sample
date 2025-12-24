@@ -178,7 +178,7 @@ let lastSent = 0;
 
 slider.addEventListener("input", () => {
   const now = Date.now();
-  if (now - lastSent < 20) return; // 20ms制限
+  if (now - lastSent < 75) return; // 75ms制限
   lastSent = now;
 
   const value = slider.value;
