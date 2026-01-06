@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 
 <html>
   
@@ -14,7 +14,7 @@
   
   <h1>Web Bluetooth API Example</h1>
 
-  <!-- <button id="connectBtn">接続（HM-10）</button> -->
+  <!-- <button id="connectBtn">接続（HM-10）</button> 
   <button onclick="console.log('clicked')" id ="connectBtn">接続（HM-10）</button>
   <br><br>
 
@@ -26,4 +26,42 @@
 
   <script src="script.js"></script>
   </body>
+</html> -->
+
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <title>課題研究｜Web Bluetooth 制御</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
+</head>
+
+<body>
+
+  <header>
+    <div class="logo">課題研究</div>
+    <div class="subtitle">Web Bluetoothによるゲイン制御</div>
+  </header>
+
+  <main class="container">
+    <h1>Web Bluetooth Controller</h1>
+
+    <button id="connectBtn">HM-10 に接続</button>
+
+    <div class="control">
+      <label for="slider">ポテンショメータ値</label>
+      <input type="range" id="slider" min="0" max="255" value="0">
+      <div class="value">
+        現在値：<span id="valueLabel">0</span>
+      </div>
+    </div>
+
+    <div class="log" id="log"></div>
+  </main>
+
+  <script src="script.js"></script>
+</body>
 </html>
