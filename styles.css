@@ -1,4 +1,4 @@
-body {
+/* body {
   padding: 0em;
   font-family: sans-serif;
   margin: 0;
@@ -39,4 +39,93 @@ slider {
 
 input[type=range] {
   width: 100%;
+} */
+
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", sans-serif;
+  background-color: #f4f6f8;
+  color: #333;
+}
+
+/* ヘッダー */
+header {
+  background-color: #2f3b59;
+  color: #fff;
+  padding: 15px 20px;
+}
+
+.logo {
+  font-size: 1.4em;
+  font-weight: bold;
+}
+
+.subtitle {
+  font-size: 0.9em;
+  opacity: 0.8;
+}
+
+/* メインカード */
+.container {
+  max-width: 500px;
+  margin: 40px auto;
+  background: #fff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+/* ボタン */
+button {
+  width: 100%;
+  padding: 12px;
+  font-size: 1em;
+  background-color: #606699;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #4f5485;
+}
+
+/* スライダー */
+.control {
+  margin-top: 30px;
+}
+
+label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 10px;
+}
+
+input[type=range] {
+  width: 100%;
+}
+
+.value {
+  margin-top: 10px;
+  text-align: right;
+  font-family: monospace;
+}
+
+/* ログ表示 */
+.log {
+  margin-top: 25px;
+  padding: 10px;
+  background-color: #f0f0f0;
+  border-radius: 6px;
+  font-family: monospace;
+  font-size: 0.9em;
+  max-height: 150px;
+  overflow-y: auto;
 }
