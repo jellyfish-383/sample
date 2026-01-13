@@ -1,4 +1,4 @@
-/* body {
+body {
   padding: 0em;
   font-family: sans-serif;
   margin: 0;
@@ -39,9 +39,9 @@ slider {
 
 input[type=range] {
   width: 100%;
-} */
+}
 
-
+/* 
 body {
   margin: 0;
   font-family: "Segoe UI", sans-serif;
@@ -128,4 +128,4 @@ input[type=range] {
   font-size: 0.9em;
   max-height: 150px;
   overflow-y: auto;
-}
+} */
