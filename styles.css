@@ -41,15 +41,15 @@ input[type=range] {
   width: 100%;
 }
 
-/* 
-body {
+
+/* body {
   margin: 0;
   font-family: "Segoe UI", sans-serif;
   background-color: #f4f6f8;
   color: #333;
 }
 
-/* ヘッダー */
+// ヘッダー
 header {
   background-color: #2f3b59;
   color: #fff;
@@ -66,7 +66,7 @@ header {
   opacity: 0.8;
 }
 
-/* メインカード */
+// メインカード
 .container {
   max-width: 500px;
   margin: 40px auto;
@@ -81,7 +81,7 @@ h1 {
   margin-bottom: 25px;
 }
 
-/* ボタン */
+// ボタン 
 button {
   width: 100%;
   padding: 12px;
@@ -97,7 +97,7 @@ button:hover {
   background-color: #4f5485;
 }
 
-/* スライダー */
+// スライダー 
 .control {
   margin-top: 30px;
 }
@@ -118,7 +118,7 @@ input[type=range] {
   font-family: monospace;
 }
 
-/* ログ表示 */
+// ログ表示
 .log {
   margin-top: 25px;
   padding: 10px;
@@ -128,4 +128,5 @@ input[type=range] {
   font-size: 0.9em;
   max-height: 150px;
   overflow-y: auto;
-} */
+}  */
+
