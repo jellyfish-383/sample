@@ -265,8 +265,8 @@ slider.addEventListener("input", () => {
   sendValue(value);
 });
 
-// /* ===== 接続ボタン ===== */
-// connectBtn.addEventListener("click", () => {
-//   connectToHM10();
-// });
+/* ===== 接続ボタン ===== */
+connectBtn.addEventListener("click", () => {
+  connectToHM10();
+});
 
