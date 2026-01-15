@@ -68,136 +68,6 @@ slider.addEventListener("input", () => {
 
 
 
-let bleDevice;
-let bleCharacteristic;
-
-const connectBtn = document.getElementById("connectBtn");
-const slider = document.getElementById("slider");
-const valueLabel = document.getElementById("valueLabel");
-const log = document.getElementById("log");
-
-slider.disabled = true;
-
-console.log("script.js loaded");
-console.log("DOM loaded", {
-  connectBtn,
-  slider,
-  valueLabel,
-  log
-});
-
-
-// 出力ログ
-function logMessage(msg) {
-  log.innerText = `[LOG] ${msg}`;
-}
-
-// HM-10 接続
-async function connectToHM10() {
-  try {
-    const serviceUUID = '0000ffe0-0000-1000-8000-00805f9b34fb';
-    const characteristicUUID = '0000ffe1-0000-1000-8000-00805f9b34fb';
-
-    logMessage("HM-10 を検索中…");
-
-    bleDevice = await navigator.bluetooth.requestDevice({
-      filters: [{ services: [serviceUUID] }]
-    });
-
-    const server = await bleDevice.gatt.connect();
-    const service = await server.getPrimaryService(serviceUUID);
-    bleCharacteristic = await service.getCharacteristic(characteristicUUID);
-
-    logMessage("HM-10 接続成功");
-    slider.disabled = false;
-  } catch (error) {
-    console.error(error);
-    logMessage("接続失敗: " + error);
-  }
-}
-
-// HM-10へ送信
-// async function sendValue(value) {
-//   if (!bleCharacteristic) {
-//     logMessage("先に接続してください");
-//     return;
-//   }
-
-//   const command = `SET ${value}\n`;
-
-//   const encoder = new TextEncoder();
-//   const data = encoder.encode(command);
-
-//   await bleCharacteristic.writeValue(data);
-//   logMessage(`送信: ${command.trim()}`);
-// }
-async function sendValue(value) {
-  if (!bleCharacteristic) return;
-
-  const command = `SET ${value}\n`;
-  const data = new TextEncoder().encode(command);
-
-  try {
-    await bleCharacteristic.writeValue(data);
-    logMessage(`送信: ${command.trim()}`);
-  } catch (e) {
-    console.error(e);
-    logMessage("BLE送信エラー");
-  }
-}
-
-// async function sendValue(value) {
-//   if (!bleCharacteristic) {
-//     logMessage("先に接続してください");
-//     return;
-//   }
-
-//   // ← ここが重要
-//   const potNumber = 0;   // MCP4151 #1 を制御
-//   const command = `SET ${potNumber} ${value}\n`;
-
-//   const encoder = new TextEncoder();
-//   const data = encoder.encode(command);
-
-//   try {
-//     await bleCharacteristic.writeValue(data);
-//     logMessage(`送信: ${command.trim()}`);
-//   } catch (err) {
-//     console.error(err);
-//     logMessage("送信失敗: " + err);
-//   }
-// }
-
-
-// イベント
-// connectBtn.addEventListener("click", connectToHM10);
-
-// slider.addEventListener("input", () => {
-//   const value = slider.value;
-//   valueLabel.textContent = value;
-//   sendValue(value);
-// });
-let lastSent = 0;
-
-slider.addEventListener("input", () => {
-  const now = Date.now();
-  if (now - lastSent < 20) return; // 20ms制限
-  lastSent = now;
-
-  const value = slider.value;
-  valueLabel.textContent = value;
-  sendValue(value);
-});
-
-connectBtn.addEventListener("click", () => {
-  console.log("connect button clicked");
-  connectToHM10();
-});
-
-
-
-
-
 
 
 
@@ -212,17 +82,27 @@ connectBtn.addEventListener("click", () => {
 
 // slider.disabled = true;
 
-// /* ===== ログ表示（接続結果のみ） ===== */
-// function setLog(message, success) {
-//   log.textContent = message;
-//   log.className = "log " + (success ? "success" : "error");
+// console.log("script.js loaded");
+// console.log("DOM loaded", {
+//   connectBtn,
+//   slider,
+//   valueLabel,
+//   log
+// });
+
+
+// // 出力ログ
+// function logMessage(msg) {
+//   log.innerText = `[LOG] ${msg}`;
 // }
 
-// /* ===== HM-10 接続 ===== */
+// // HM-10 接続
 // async function connectToHM10() {
 //   try {
 //     const serviceUUID = '0000ffe0-0000-1000-8000-00805f9b34fb';
 //     const characteristicUUID = '0000ffe1-0000-1000-8000-00805f9b34fb';
+
+//     logMessage("HM-10 を検索中…");
 
 //     bleDevice = await navigator.bluetooth.requestDevice({
 //       filters: [{ services: [serviceUUID] }]
@@ -232,16 +112,29 @@ connectBtn.addEventListener("click", () => {
 //     const service = await server.getPrimaryService(serviceUUID);
 //     bleCharacteristic = await service.getCharacteristic(characteristicUUID);
 
+//     logMessage("HM-10 接続成功");
 //     slider.disabled = false;
-//     setLog("接続成功", true);
-
 //   } catch (error) {
 //     console.error(error);
-//     setLog("接続失敗", false);
+//     logMessage("接続失敗: " + error);
 //   }
 // }
 
-// /* ===== HM-10へ送信（ログなし） ===== */
+// // HM-10へ送信
+// // async function sendValue(value) {
+// //   if (!bleCharacteristic) {
+// //     logMessage("先に接続してください");
+// //     return;
+// //   }
+
+// //   const command = `SET ${value}\n`;
+
+// //   const encoder = new TextEncoder();
+// //   const data = encoder.encode(command);
+
+// //   await bleCharacteristic.writeValue(data);
+// //   logMessage(`送信: ${command.trim()}`);
+// // }
 // async function sendValue(value) {
 //   if (!bleCharacteristic) return;
 
@@ -250,17 +143,49 @@ connectBtn.addEventListener("click", () => {
 
 //   try {
 //     await bleCharacteristic.writeValue(data);
+//     logMessage(`送信: ${command.trim()}`);
 //   } catch (e) {
 //     console.error(e);
+//     logMessage("BLE送信エラー");
 //   }
 // }
 
-// /* ===== スライダー制御 ===== */
+// // async function sendValue(value) {
+// //   if (!bleCharacteristic) {
+// //     logMessage("先に接続してください");
+// //     return;
+// //   }
+
+// //   // ← ここが重要
+// //   const potNumber = 0;   // MCP4151 #1 を制御
+// //   const command = `SET ${potNumber} ${value}\n`;
+
+// //   const encoder = new TextEncoder();
+// //   const data = encoder.encode(command);
+
+// //   try {
+// //     await bleCharacteristic.writeValue(data);
+// //     logMessage(`送信: ${command.trim()}`);
+// //   } catch (err) {
+// //     console.error(err);
+// //     logMessage("送信失敗: " + err);
+// //   }
+// // }
+
+
+// // イベント
+// // connectBtn.addEventListener("click", connectToHM10);
+
+// // slider.addEventListener("input", () => {
+// //   const value = slider.value;
+// //   valueLabel.textContent = value;
+// //   sendValue(value);
+// // });
 // let lastSent = 0;
 
 // slider.addEventListener("input", () => {
 //   const now = Date.now();
-//   if (now - lastSent < 20) return;
+//   if (now - lastSent < 20) return; // 20ms制限
 //   lastSent = now;
 
 //   const value = slider.value;
@@ -268,8 +193,87 @@ connectBtn.addEventListener("click", () => {
 //   sendValue(value);
 // });
 
-// /* ===== 接続ボタン ===== */
 // connectBtn.addEventListener("click", () => {
+//   console.log("connect button clicked");
 //   connectToHM10();
 // });
+
+
+
+
+
+
+
+
+
+let bleDevice;
+let bleCharacteristic;
+
+const connectBtn = document.getElementById("connectBtn");
+const slider = document.getElementById("slider");
+const valueLabel = document.getElementById("valueLabel");
+const log = document.getElementById("log");
+
+slider.disabled = true;
+
+/* ===== ログ表示（接続結果のみ） ===== */
+function setLog(message, success) {
+  log.textContent = message;
+  log.className = "log " + (success ? "success" : "error");
+}
+
+/* ===== HM-10 接続 ===== */
+async function connectToHM10() {
+  try {
+    const serviceUUID = '0000ffe0-0000-1000-8000-00805f9b34fb';
+    const characteristicUUID = '0000ffe1-0000-1000-8000-00805f9b34fb';
+
+    bleDevice = await navigator.bluetooth.requestDevice({
+      filters: [{ services: [serviceUUID] }]
+    });
+
+    const server = await bleDevice.gatt.connect();
+    const service = await server.getPrimaryService(serviceUUID);
+    bleCharacteristic = await service.getCharacteristic(characteristicUUID);
+
+    slider.disabled = false;
+    setLog("接続成功", true);
+
+  } catch (error) {
+    console.error(error);
+    setLog("接続失敗", false);
+  }
+}
+
+/* ===== HM-10へ送信（ログなし） ===== */
+async function sendValue(value) {
+  if (!bleCharacteristic) return;
+
+  const command = `SET ${value}\n`;
+  const data = new TextEncoder().encode(command);
+
+  try {
+    await bleCharacteristic.writeValue(data);
+  } catch (e) {
+    console.error(e);
+  }
+}
+
+/* ===== スライダー制御 ===== */
+let lastSent = 0;
+
+slider.addEventListener("input", () => {
+  const now = Date.now();
+  if (now - lastSent < 20) return;
+  lastSent = now;
+
+  const value = slider.value;
+  valueLabel.textContent = value;
+  sendValue(value);
+});
+
+/* ===== 接続ボタン ===== */
+connectBtn.addEventListener("click", () => {
+  connectToHM10();
+});
 
