@@ -65,29 +65,32 @@ slider.addEventListener("input", () => {
 });
 */
 
-// let bleDevice;
-// let bleCharacteristic;
-
-// const connectBtn = document.getElementById("connectBtn");
-// const slider = document.getElementById("slider");
-// const valueLabel = document.getElementById("valueLabel");
-// const log = document.getElementById("log");
-
-// slider.disabled = true;
-
-// console.log("script.js loaded");
-// console.log("DOM loaded", {
-//   connectBtn,
-//   slider,
-//   valueLabel,
-//   log
-// });
 
 
-// // 出力ログ
-// function logMessage(msg) {
-//   log.innerText = `[LOG] ${msg}`;
-// }
+
+let bleDevice;
+let bleCharacteristic;
+
+const connectBtn = document.getElementById("connectBtn");
+const slider = document.getElementById("slider");
+const valueLabel = document.getElementById("valueLabel");
+const log = document.getElementById("log");
+
+slider.disabled = true;
+
+console.log("script.js loaded");
+console.log("DOM loaded", {
+  connectBtn,
+  slider,
+  valueLabel,
+  log
+});
+
+
+// 出力ログ
+function logMessage(msg) {
+  log.innerText = `[LOG] ${msg}`;
+}
 
 // HM-10 接続
 async function connectToHM10() {
